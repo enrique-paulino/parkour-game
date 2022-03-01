@@ -61,6 +61,8 @@ public class WallRun : MonoBehaviour {
             isWallRunning = true;
             rb.useGravity = false;
 
+            rb.AddForce(transform.forward * wallRunUpForce, ForceMode.Impulse);
+
             if (dir == true) {
                 playerCamera.transform.localEulerAngles = new Vector3(0f, 0f, -10f);
             } else {
@@ -76,13 +78,13 @@ public class WallRun : MonoBehaviour {
             rb.useGravity = true;
 
             if (dir == true) {
-                rb.AddForce(orientation.transform.right * wallRunPushForce, ForceMode.Impulse);
+                rb.AddForce(orientation.transform.right * wallRunPushForce, ForceMode.Impulse);                
             }
             else {
                 rb.AddForce(-orientation.transform.right * wallRunPushForce, ForceMode.Impulse);
             }
 
-            rb.AddForce(Vector3.up * wallRunPushForce, ForceMode.Impulse);
+            rb.AddForce(transform.up * wallRunPushForce, ForceMode.Impulse);
 
             playerCamera.transform.localEulerAngles = new Vector3(0f, 0f, 0f);
             isWallRunning = false;

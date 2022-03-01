@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerSkills : MonoBehaviour
 {
 
+    [SerializeField] private Movement move;
+
     [Header("General")]
     public Rigidbody rb;
     public Transform orientation, player, playerCamera;
@@ -15,6 +17,7 @@ public class PlayerSkills : MonoBehaviour
 
     [Header("Dash Skill")]
     public float dashStrength;
+    float dashNum = 1;
 
     [Header("Swing Skill")]
     public LineRenderer lr;
@@ -33,6 +36,7 @@ public class PlayerSkills : MonoBehaviour
     
 
     public void CheckSkills() {
+        if (move.grounded) dashNum = 1;
         if (dash && Input.GetKeyDown(KeyCode.R)) Dash();
 
         if (swing && Input.GetMouseButtonDown(0)) StartSwing();
@@ -42,8 +46,10 @@ public class PlayerSkills : MonoBehaviour
     
     // Dash Skill
     public void Dash() {
+        if (dashNum == 0) return;
         Vector3 direction = orientation.transform.forward;
         rb.AddForce(direction * dashStrength * 2, ForceMode.Impulse);
+        dashNum = 0;
     }
 
     // Swinging Skill
